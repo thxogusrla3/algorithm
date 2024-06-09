@@ -29,7 +29,7 @@ class People {
         }
     }
     
-    public Person findPerson(String name) {
+    private Person findPerson(String name) {
         return this.people.stream()
             .filter(person -> person.getName().equals(name))
             .findFirst()
