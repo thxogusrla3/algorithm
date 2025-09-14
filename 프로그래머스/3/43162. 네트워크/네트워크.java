@@ -7,7 +7,7 @@ class Solution {
         
         for(int i = 0; i < n; i++) {
             if(!visited[i]) {
-                bfs(i, computers, visited);
+                dfs(i, computers, visited);
                 answer++;
             }
         }
@@ -28,6 +28,15 @@ class Solution {
                     visited[next] = true;
                     queue.offer(next);
                 }
+            }
+        }
+    }
+    
+    private void dfs(int current, int[][] computers, boolean[] visited) {
+        visited[current] = true;
+        for(int next = 0; next < computers.length; next++) {
+            if(next != current && computers[current][next] == 1 && !visited[next]) {
+                dfs(next, computers, visited);
             }
         }
     }
