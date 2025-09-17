@@ -5,7 +5,7 @@ class Solution {
         int answer = 0;
         boolean[] visited = new boolean[n];
         
-        for(int i = 0; i < n; i++) {
+        for(int i = 0 ; i < n; i++) {
             if(!visited[i]) {
                 bfs(computers, visited, i);
                 answer++;
@@ -14,7 +14,6 @@ class Solution {
         return answer;
     }
     
-    //
     private void bfs(int[][] computers, boolean[] visited, int start) {
         Queue<Integer> queue = new LinkedList<>();
         queue.offer(start);
@@ -24,7 +23,7 @@ class Solution {
             int current = queue.poll();
             
             for(int next = 0; next < computers.length; next++) {
-                if(next != current && !visited[next] && computers[current][next] == 1) {
+                if(next != current && computers[current][next] == 1 && !visited[next]) {
                     visited[next] = true;
                     queue.offer(next);
                 }
