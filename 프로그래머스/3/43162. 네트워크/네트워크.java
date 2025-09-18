@@ -7,10 +7,12 @@ class Solution {
         
         for(int i = 0 ; i < n; i++) {
             if(!visited[i]) {
-                bfs(computers, visited, i);
+                visited[i] = true;
+                dfs(computers, visited, i);
                 answer++;
             }
         }
+        
         return answer;
     }
     
@@ -23,10 +25,19 @@ class Solution {
             int current = queue.poll();
             
             for(int next = 0; next < computers.length; next++) {
-                if(next != current && computers[current][next] == 1 && !visited[next]) {
-                    visited[next] = true;
+                if(next != current && !visited[next] && computers[current][next] == 1) {
                     queue.offer(next);
+                    visited[next] = true;
                 }
+            }
+        }
+    }
+    
+    private void dfs(int[][] computers, boolean[] visited, int start) {
+        for(int next = 0; next < computers.length; next++) {
+            if(next != start && !visited[next] && computers[start][next] == 1) {
+                visited[next] = true;
+                dfs(computers, visited, next);
             }
         }
     }
