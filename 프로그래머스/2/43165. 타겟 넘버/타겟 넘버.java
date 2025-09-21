@@ -1,39 +1,37 @@
 import java.util.*;
 
 class Solution {
-    //1 또는 -1 을 번갈아가면서 해야하는데 5번 반복해야해
     public int solution(int[] numbers, int target) {
-        int bfs = 0;
-        Queue<int[]> queue = new LinkedList<>();
-        queue.offer(new int[]{0, 0});
+        int answer = 0;
+        Queue<int[]> queue = new ArrayDeque<>();
+        queue.add(new int[]{0, 0});
         
         while(!queue.isEmpty()) {
-            int[] current = queue.poll();
-            int index = current[0];
-            int sum = current[1];
+            int[] q = queue.poll();
+            int idx = q[0];
+            int sum = q[1];
             
-            if(index == numbers.length) {
+            if(idx == numbers.length) {
                 if(target == sum) {
-                    bfs++;
+                    answer++;
                 }
             } else {
-                queue.offer(new int[] {index + 1, sum + numbers[index]});
-                queue.offer(new int[] {index + 1, sum - numbers[index]});
+                queue.add(new int[] {idx + 1, sum + numbers[idx]});
+                queue.add(new int[] {idx + 1, sum - numbers[idx]});
             }
         }
         //return dfs(numbers, target, 0, 0);
-        return bfs;
+        return answer;
     }
     
     private int dfs(int[] numbers, int target, int start, int sum) {
-        if(numbers.length == start) {
+        if(start == numbers.length) {
             return target == sum ? 1 : 0;
-        } 
+        }
         
         int plus = dfs(numbers, target, start + 1, sum + numbers[start]);
         int minus = dfs(numbers, target, start + 1, sum - numbers[start]);
         
         return plus + minus;
     }
-    
 }
