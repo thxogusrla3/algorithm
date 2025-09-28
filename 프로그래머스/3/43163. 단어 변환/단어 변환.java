@@ -1,52 +1,49 @@
 import java.util.*;
 
 class Solution {
-    public int solution(String begin, String target, String[] words) {        
+    public int solution(String begin, String target, String[] words) {
         if(!Arrays.asList(words).contains(target)) return 0;
         
-        boolean[] visited           = new boolean[words.length];
-        Map<String, Integer> dist   = new HashMap<>();
-        Queue<String> queue         = new ArrayDeque<>();
+        Queue<String> q = new ArrayDeque<>();
+        Map<String, Integer> map = new HashMap<>();
+        boolean[] visited = new boolean[words.length];
         
-        dist.put(begin, 0);
-        queue.add(begin);
+        q.add(begin);
+        map.put(begin, 0);
         
-        while(!queue.isEmpty()) {
-            String current = queue.poll();
-            int step = dist.get(current);
+        while(!q.isEmpty()) {
+            String current = q.poll();
+            
+            if(current.equals(target)) {
+                return map.get(current);
+            }
             
             for(int i = 0 ; i < words.length; i++) {
                 if(visited[i]) continue;
+                
                 String next = words[i];
-                if(!isDiffOne(current, next)) continue;
-                
-                
-                visited[i] = true;
-                dist.put(next, step + 1);
-                
-                if(target.equals(next)) return step + 1;
-                
-                queue.add(next);
+
+                if(isDiffOne(next, current)) {
+                    map.put(next, map.get(current) + 1);
+                    q.add(next);
+                    visited[i] = true;
+                }
             }
         }
         
         return 0;
     }
     
-    private boolean isDiffOne(String a, String b) {
-        int size = a.length();
-        int diffCount = 0;
-        
-        for(int i = 0; i < size; i++) {
-            if(a.charAt(i) != b.charAt(i)) {
-                diffCount++;
-                
-                if(diffCount > 1) {
-                    return false;
-                }
+    private boolean isDiffOne(String compare, String target) {
+        int count = 0;
+        for(int i = 0 ; i < compare.length(); i++) {
+            char a = compare.charAt(i);
+            char b = target.charAt(i);
+            
+            if(a != b) {
+                count++;
             }
         }
-        
-        return diffCount == 1;
+        return count == 1;
     }
 }
