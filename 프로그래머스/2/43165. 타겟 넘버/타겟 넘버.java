@@ -2,30 +2,29 @@ import java.util.*;
 
 class Solution {
     public int solution(int[] numbers, int target) {
-        int answer = 0;
-        Queue<int[]> queue = new ArrayDeque<>();
-        queue.add(new int[]{0, 0});
-        
-        while(!queue.isEmpty()) {
-            int[] q = queue.poll();
-            int idx = q[0];
-            int sum = q[1];
+        int result = 0;
+        Queue<int[]> q = new ArrayDeque<>();
+        q.add(new int[]{0, 0});
+        while(!q.isEmpty()) {
+            int[] items = q.poll();
+            int idx = items[0];
+            int sum = items[1];
             
             if(idx == numbers.length) {
                 if(target == sum) {
-                    answer++;
+                    result++;
                 }
+                
             } else {
-                queue.add(new int[] {idx + 1, sum + numbers[idx]});
-                queue.add(new int[] {idx + 1, sum - numbers[idx]});
+                q.add(new int [] {idx + 1, sum + numbers[idx]});
+                q.add(new int [] {idx + 1, sum - numbers[idx]});    
             }
         }
-        //return dfs(numbers, target, 0, 0);
-        return answer;
+        return result;
     }
     
     private int dfs(int[] numbers, int target, int start, int sum) {
-        if(start == numbers.length) {
+        if(numbers.length == start) {
             return target == sum ? 1 : 0;
         }
         
