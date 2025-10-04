@@ -1,44 +1,39 @@
 import java.util.*;
 
-//메모제이션 간 곳마다 카운트를 먹임.
 class Solution {
+    private static int[] dx = new int[] {1, -1, 0, 0};
+    private static int[] dy = new int[] {0, 0, 1, -1};
+    
     public int solution(int[][] maps) {
-        int answer = 0;
-        int n = maps.length;
-        int m = maps[0].length;
+        int N = maps.length;
+        int M = maps[0].length;
         
-        if(maps[0][0] == 0 || maps[n - 1][m - 1] == 0) return -1;
+        int[][] dist = new int[N][M];
+        Queue<int[]> q = new ArrayDeque<>();
+        q.add(new int[] {0, 0});
         
-        int[] dx = new int[]{1, -1, 0, 0};
-        int[] dy = new int[]{0, 0, 1, -1};
-        int[][] memo = new int[n][m];
-        memo[0][0] = 1;
+        dist[0][0] = 1;
         
-        Queue<int[]> queue = new LinkedList<>();
-        queue.offer(new int[]{0, 0});
-        int nx, ny;
-        
-        while(!queue.isEmpty()) {
-            int[] point = queue.poll();
+        while(!q.isEmpty()) {
+            int[] point = q.poll();
             int x = point[0];
             int y = point[1];
             
-            if(x == n - 1 && y == m - 1) {
-                return memo[x][y];
-            }
+            if(x == N - 1 && y == M - 1) return dist[x][y];
             
             for(int i = 0; i < 4; i++) {
-                nx = x + dx[i];
-                ny = y + dy[i];
+                int nx = x + dx[i];
+                int ny = y + dy[i];
                 
-                if(nx < 0 || nx >= n || ny < 0 || ny >= m) continue;
-                if(memo[nx][ny] != 0) continue;
+                if(nx < 0 || ny < 0 || nx >= N || ny >= M) continue;
+                if(dist[nx][ny] != 0) continue;
                 if(maps[nx][ny] == 0) continue;
                 
-                memo[nx][ny] = memo[x][y] + 1;
-                queue.offer(new int[]{nx, ny});
+                dist[nx][ny] = dist[x][y] + 1;
+                q.add(new int[] {nx, ny});
             }
         }
+        
         return -1;
     }
 }
