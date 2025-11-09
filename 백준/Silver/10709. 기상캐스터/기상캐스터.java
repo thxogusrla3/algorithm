@@ -1,3 +1,4 @@
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -20,18 +21,11 @@ public class Main {
         StringBuilder sb = new StringBuilder();
 
         char current;
-        char before;
 
         for(int i = 0 ; i < h; i++) {
             int count = -1;
             for(int j = 0 ; j < w; j++) {
                 current = map[i][j];
-
-                if(j == 0) {
-                    before = map[i][j];
-                } else {
-                    before = map[i][j - 1];
-                }
 
                 if(current == 'c') {
                     count = 0;
